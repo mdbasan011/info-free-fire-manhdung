@@ -176,6 +176,6 @@ async def startup():
     await initialize_tokens()
     asyncio.create_task(refresh_tokens_periodically())
 
-if __name__ == '__main__':
-    asyncio.run(startup())
-    app.run(host='0.0.0.0', port=5000, debug=True)
+#if __name__ == '__main__':
+    #asyncio.run(startup())
+    #app.run(host='0.0.0.0', port=5000, debug=True)
