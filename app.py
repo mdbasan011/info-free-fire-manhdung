@@ -172,10 +172,19 @@ def refresh_tokens_endpoint():
 
 # === Startup ===
 
-async def startup():
-    await initialize_tokens()
-    asyncio.create_task(refresh_tokens_periodically())
+# CODE MỚI
+@app.before_request
+def start_up():
+    # Kiểm tra nếu chưa có token thì mới khởi tạo
+    if not cached_tokens:
+        try:
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+            loop.run_until_complete(initialize_tokens())
+        except Exception as e:
+            print(f"Startup error: {e}")
 
+# Xóa hoàn toàn phần if __name__ == '__main__': hoặc để trống
 #if __name__ == '__main__':
     #asyncio.run(startup())
     #app.run(host='0.0.0.0', port=5000, debug=True)
